@@ -45,7 +45,7 @@ def append_to_existing_Excel_sheet(dataframe, start_row, table_column_location):
     dataframe.to_excel(excel_writer, sheet_name=SHEET_NAME, float_format='%.2f', header=False, index=False, startrow=start_row, startcol=table_column_location)
 
     # Uncomment the line below whenever you want to write to desired Excel file
-    excel_writer.save()
+    #excel_writer.save()
 
 def create_transactions_dataframe(request_string, financial_institution):
     filtered_string = request_string.replace('\\', '')
@@ -100,7 +100,7 @@ def create_transactions_dataframe(request_string, financial_institution):
     new_transactions[table_column_location + 2] = new_transactions[table_column_location + 2].astype(float)
 
     print(new_transactions)
-
+    
     append_to_existing_Excel_sheet(new_transactions.round(2), start_row, table_column_location)
 
     return len(new_transactions) 
@@ -142,3 +142,4 @@ def index():
 
 if __name__ == "__main__":
     app.run()
+    

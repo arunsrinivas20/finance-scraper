@@ -11,8 +11,6 @@ function extractVenmoHTMLContent(innerHTML) {
 
     const transactionList = parseHTMLArrForTransactionsVenmo(htmlArr);
 
-    console.log(transactionList);
-
     const jsonStringTransactions = convertArraytoJSON(transactionList);
 
     return jsonStringTransactions;
@@ -36,7 +34,7 @@ function extractC1HTMLContent(innerHTML) {
     return jsonStringTransactions;
 }
 
-async function sendPageHTMLContent(innerHTML, tab) {
+function sendPageHTMLContent(innerHTML, tab) {
     const tabTitle = tab.title;
     let jsonStringTransactions = undefined;
 
@@ -48,18 +46,20 @@ async function sendPageHTMLContent(innerHTML, tab) {
 
     let xmlhttp = new XMLHttpRequest();
 
-    xmlhttp.onreadystatechange = async function() {
-        await console.log('UPDATE READY')
+    xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === XMLHttpRequest.DONE) {
-            alert(xmlhttp.response);
+            let port = chrome.extension.connect({
+                name: "Communication"
+            });
+            port.postMessage(xmlhttp.response);
         } 
     };
 
-    await xmlhttp.open("POST", "http://127.0.0.1:5000/", true);
-    await xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    await xmlhttp.send('data=' + jsonStringTransactions + '&financial_institution=' + tab.title);
+    xmlhttp.open("POST", "http://127.0.0.1:5000/", true);
+    xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    xmlhttp.send('data=' + jsonStringTransactions + '&financial_institution=' + tab.title);
 
-    await console.log(xmlhttp);
+    console.log(xmlhttp);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
