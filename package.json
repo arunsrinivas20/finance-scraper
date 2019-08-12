@@ -1,0 +1,16 @@
+{
+  "name": "finance-scraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "chrome-extension-async": "^3.3.2",
+    "exceljs": "^1.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

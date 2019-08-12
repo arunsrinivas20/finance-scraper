@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+  
+    "name": "Finance Scraper",
+    "description": "This extension will analyze a page using GTmetrixScrape transactions.",
+    "version": "1.0",
+  
+    "browser_action": {
+        "default_icon": "money-bag.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "https://myaccounts.capitalone.com/360Checking/*",
+        "http://127.0.0.1:5000/"
+    ]
+}
