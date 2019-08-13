@@ -17,9 +17,6 @@ from email.mime.text import MIMEText
 app = Flask(__name__)
 app.debug = True
 
-# /Users/asrini19/Documents/Finances.xlsx
-# Bank and Venmo
-
 FILE_PATH = ''
 SHEET_NAME = ''
 TABLE_NAME = ''
