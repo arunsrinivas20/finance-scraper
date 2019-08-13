@@ -34,7 +34,7 @@ function extractC1HTMLContent(innerHTML) {
     return jsonStringTransactions;
 }
 
-function sendPageHTMLContent(innerHTML, tab) {
+function sendPageHTMLContent(innerHTML, tab, filePath, excelSheet, email) {
     const tabTitle = tab.title;
     let jsonStringTransactions = undefined;
 
@@ -57,7 +57,7 @@ function sendPageHTMLContent(innerHTML, tab) {
 
     xmlhttp.open("POST", "http://127.0.0.1:5000/", true);
     xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    xmlhttp.send('data=' + jsonStringTransactions + '&financial_institution=' + tab.title);
+    xmlhttp.send('data=' + jsonStringTransactions + '&financial_institution=' + tab.title + '&file_path=' + filePath + '&excel_sheet=' + excelSheet + '&email=' + email);
 
     console.log(xmlhttp);
 }
@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
     checkPageButton.addEventListener('click', async () => {
         await chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
             let tab = tabs[0];
+            let filePath = document.getElementById('inputFilePath').value;
+            let excelSheet = document.getElementById('inputExcelSheet').value;
 
             chrome.tabs.executeScript({
                 code: '(' + function() {
@@ -74,7 +76,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         innerHTML: document.body.innerHTML};
                     } + ')();'
                 }, function(results) {
-                    sendPageHTMLContent(results[0].innerHTML, tab);
+                    sendPageHTMLContent(results[0].innerHTML, tab, filePath, excelSheet, undefined);
+            });
+      });
+    }, false);
+}, false);
+
+document.addEventListener('DOMContentLoaded', () => {
+    let checkPageEmailButton = document.getElementById('checkPageEmail');
+    checkPageEmailButton.addEventListener('click', async () => {
+        await chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+            let tab = tabs[0];
+            let email = document.getElementById('inputEmail').value;
+
+            chrome.tabs.executeScript({
+                code: '(' + function() {
+                    return {
+                        innerHTML: document.body.innerHTML};
+                    } + ')();'
+                }, function(results) {
+                    sendPageHTMLContent(results[0].innerHTML, tab, undefined, undefined, email);
             });
       });
     }, false);

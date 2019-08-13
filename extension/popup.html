@@ -6,7 +6,43 @@
     <script type="module" src="popup.js"></script>
     <script type="module" src="utils.js"></script>
   </head>
-  <body>
-    <button id="checkPage">Scrape!</button>
+<body style="height:200px;width:300px;background-color: rgb(241, 229, 229);border-radius: 10px;">
+    <div style="font-size:24px;padding-bottom:40px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif;color:rgb(78, 37, 37)">
+        Finance Scraper
+    </div>
+    <div style="text-align: center;">
+        <div style="font-size:14px;text-align:left;padding-bottom:20px;font-family: Verdana, Geneva, Tahoma, sans-serif;">
+            Enter the file path and sheet name of the workbook you want to write to.
+        </div>
+        <input id="inputFilePath" type="text" name="File Path" placeholder="File path to excel workbook..." style="width: 220px;height: 20px;font-size: 14px;">
+        <br />
+        <div style="padding-top:10px">
+        <input id="inputExcelSheet" type="text" name="Excel Sheet" placeholder="Name of the excel sheet..." style="width: 220px;height: 20px;font-size: 14px">
+        <br />
+        <div style="padding-top:10px">
+        <button id="checkPage" style="height:20px;border-radius:5px;">
+            <div style="font-size: 14px;">
+                Submit
+            </div>
+        </button>
+        <br />
+        <br />
+        <div style="font-size:18px;text-align:center;padding-bottom:20px;font-family: Verdana, Geneva, Tahoma, sans-serif;font-weight: bolder">
+            OR
+        </div>
+        <div style="font-size:14px;text-align:left;padding-bottom:20px;font-family: Verdana, Geneva, Tahoma, sans-serif;">
+            Enter the email to send a workbook of your most recent transactions.
+        </div>
+        <input id="inputEmail" type="text" name="File Path" placeholder="Email to send transactions..." style="width: 220px;height: 20px;font-size: 14px">
+        <br />
+        <div style="padding-top:10px">
+        <button id="checkPageEmail" style="height:20px;border-radius:5px;">
+            <div style="font-size: 14px;">
+                Submit
+            </div>
+        </button>
+        <br />
+        <br />
+    </div>
   </body>
 </html>
