@@ -106,7 +106,7 @@ export function parseHTMLArrForTransactionsVenmo(htmlArr) {
         const person1 = match[1] + ' ' + match[2];
         const person2 = match[3] + ' ' + match[4];
         const transactionPartner = person1 !== 'Arun Srinivas' ? person1 : person2;
-        regexp = /<div class="feed-description__notes__content"><p><!-- react-text: \d+ -->([A-Za-z\d\s]*)</
+        regexp = /<div class="feed-description__notes__content"><p><!-- react-text: \d+ -->([A-Za-z\d\s\W]*)<!--/
         match = regexp.exec(str);
         let reason = match[1];
         reason = modifyTransactionReason(reason.toLowerCase(), transactionPartner, transactionPartner === person1);
