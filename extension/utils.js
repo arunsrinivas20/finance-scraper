@@ -94,11 +94,11 @@ function modifyTransactionReason(reason, person1, person2, charged) {
             res = `Paid back ${person2} for ${reason}`;
         } else {
             if (reason.indexOf('ppco') >= 0 || reason.indexOf('pep') >= 0 || reason.indexOf('pepco') >= 0) {
-                res = `Pepco Bill - ${person2}`;
+                res = `Pepco Bill - ${person1}`;
             } else if (reason.indexOf('vzon') >= 0 || reason.indexOf('verizon') >= 0) {
-                res = `Verizon Bill - ${person2}`;
+                res = `Verizon Bill - ${person1}`;
             } else {
-                res = `Paid back by ${person2} for ${reason}`;
+                res = `Paid back by ${person1} for ${reason}`;
             }
         }
     }
