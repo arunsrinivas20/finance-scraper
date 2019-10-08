@@ -115,8 +115,11 @@ export function parseHTMLArrForTransactionsVenmo(htmlArr) {
         const day = match[2];
         const year = match[3].substring(2);
 
-        regexp = /<strong>([A-Za-z]+)\s+([A-Za-z]+)<.+<strong>([A-Za-z]+)\s+([A-Za-z]+)</;
+        regexp = /<strong>([A-Za-z]+)\s+([A-Za-z]+)<.+<strong>([A-Za-z]+)\s*([A-Za-z]*)</;
         match = regexp.exec(str);
+        if (match == null) {
+            console.log(str)
+        }
         const person1 = match[1] + ' ' + match[2];
         const person2 = match[3] + ' ' + match[4];
         
