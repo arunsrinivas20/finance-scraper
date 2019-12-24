@@ -27,8 +27,6 @@ FILE_PATH = ''
 SHEET_NAME = ''
 TABLE_NAME = ''
 FINANCIAL_INSTITUTION = ''
-USER_EMAIL = ''
-USER_PASSWORD = ''
 
 def append_to_existing_Excel_sheet(dataframe, start_row, table_column_location):
     np.round(dataframe, decimals=2)
@@ -49,6 +47,7 @@ def create_transactions_dataframe(finances_sheet, transactions):
     last_transaction_date = None
     num_transactions = len(transactions)
     columns_to_modify = None
+    current_balance = None
     
     while (finances_sheet.loc[0, table_column_location + 1] != TABLE_NAME):
         table_column_location += 1
@@ -58,6 +57,7 @@ def create_transactions_dataframe(finances_sheet, transactions):
     print(finances_sheet)
 
     last_transaction_date = (finances_sheet.loc[start_row - 1, table_column_location]).date()
+    current_balance = finances_sheet.loc[start_row - 1, table_column_location + 1]
 
     print(last_transaction_date)
 
@@ -74,20 +74,22 @@ def create_transactions_dataframe(finances_sheet, transactions):
 
         final_date_obj = pd.to_datetime(trans_i['date']).date()
 
-        if (final_date_obj >= last_transaction_date 
-            and duplicate_not_exists(finances_sheet, trans_i, final_date_obj, start_row - 1, table_column_location)):
+        # Need to figure out duplicates
+        if (final_date_obj > last_transaction_date):
             new_transaction = None
-
             reason = trans_i['description']
             amount = trans_i['amount']
-            balance = trans_i['balance']
-
-            # Figure out how to determine the category for Venmo
 
             if (FINANCIAL_INSTITUTION == 'C1'):
+                balance = trans_i['balance']
+
                 new_transaction = pd.DataFrame([[final_date_obj, balance, amount, reason]], columns=columns_to_modify)   
             elif (FINANCIAL_INSTITUTION == 'Venmo'):
-                new_transaction = pd.DataFrame([[final_date_obj, balance, amount, reason]], columns=columns_to_modify)
+                current_balance += amount
+                print(current_balance)
+                category = trans_i['category']
+
+                new_transaction = pd.DataFrame([[final_date_obj, current_balance, amount, reason, category]], columns=columns_to_modify)
 
             new_transactions = new_transactions.append(new_transaction, ignore_index=True)
 
@@ -155,7 +157,7 @@ def index():
     SHEET_NAME = request.form['excel_sheet']
     transactions = None
     fin_inst = request.form['financial_institution']
-    
+
     if ('Capital One' in fin_inst):
         FINANCIAL_INSTITUTION = 'C1'
         TABLE_NAME = 'Bank'
@@ -163,14 +165,13 @@ def index():
     elif ('Venmo' in fin_inst):
         FINANCIAL_INSTITUTION = 'Venmo'
         TABLE_NAME = 'Venmo'
-        parse_from_Venmo(html_data)
-        return 'TBD'
+        transactions = parse_from_Venmo(html_data)
     else:
         return 'Something went wrong. We were not able to determine your financial institution.'
 
     number_of_new_transactions = None
 
-    if (TABLE_NAME != ''):
+    if (TABLE_NAME == 'Bank' or TABLE_NAME == 'Venmo'):
         number_of_new_transactions = write_to_existing_Excel(transactions)
     
     if (not is_number(number_of_new_transactions)):

@@ -40,9 +40,7 @@ def is_number(number):
         return False
 
 # Might be more difficult since I change the descriptions later
-# We'll assume that an existing transaction that has the same balance 
-# and amount is considered duplicate for simplicity. In theory, I would
-# have used the transaction id as a primary key, so we think about it later. 
+# We will handle potenital duplicates later using sqlite3
 def duplicate_not_exists(dataframe, transaction, date, row, col):
     while (dataframe.loc[row, col].date() == date):
         amount = transaction['amount']
