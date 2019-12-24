@@ -2,7 +2,7 @@
     "manifest_version": 2,
   
     "name": "Finance Scraper",
-    "description": "This extension will analyze a page using GTmetrixScrape transactions.",
+    "description": "This extension will scrape transactions from Capital One or Venmo.",
     "version": "1.0",
   
     "browser_action": {

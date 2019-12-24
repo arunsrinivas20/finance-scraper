@@ -1,44 +1,39 @@
-" role="row" class="bank-transaction" data-ng-class="{open : accordionVM.isOpen($index)}" data-ng-click="accordionVM.setOpenIndex($index); 
-accordionVM.accordionParent.getTransactionDetails(transaction, accordionVM.isOpen($index))" tabindex="-1"><i class="icon-caret desktop"></i>
-<div role="gridcell" class="transaction-date"><div class="month">Jun</div><div class="day">24</div></div><div class="transaction-logo">
-<img alt="" class="img-logo" data-ng-src="https://ecm.capitalone.com/MDX/assets/images/legacy/logos/paypal.png" 
-src="https://ecm.capitalone.com/MDX/assets/images/legacy/logos/paypal.png"></div><div class="transaction-description-container">
-<div role="gridcell" class="transaction-title"><i class="icon-caret mobile"></i><div><span id="transactionName-138" role="button" aria-expanded="false" 
-tabindex="0">Paypal</span> <span data-ng-class="{'memo-ledger-icon': transaction.transactionDescriptionDetail.memoText}"></span></div></div><div 
-role="gridcell" class="transaction-category">Purchase</div></div><div class="transaction-amount-details"><div role="gridcell" 
-data-ng-class="accordionVM.accordionParent.getTransactionAmountClass(transaction)" class="transaction-amount Debit">$1.68</div><div role="gridcell" 
-class="transaction-balance">$15,929.92</div></div><!-- ngInclude: accordionVM.accordionParent.getTemplate(transaction) --><
-div data-ng-include="accordionVM.accordionParent.getTemplate(transaction)" stop-event-prop="" class=""><accordion-drawer id="transaction-drawer-138" 
-class="bank-enhanced-transaction" role="region" aria-live="polite" is-open="accordionVM.isOpen($index)" accordion-open="accordionVM.accordionParent.
-logDisputesDrawerOpenEvent('debitcard', transaction); accordionVM.accordionParent.openAccordionMerchantReceipt(transaction)" accordion-close="accord
-ionVM.accordionParent.logDrawerCloseEvent('transactions:Drawer:Close')" aria-hidden="true"><!-- ngIf: accordionVM.accordionParent.isDisputed(transact
-ion) --><div class="cleansed-data" data-ng-class="{'max-width': !transaction.merchant.address}"><!-- ngIf: transaction.merchant.address || transactio
-n.merchant.phoneNumber --><div class="merchant-block" data-ng-if="transaction.merchant.address || transaction.merchant.phoneNumber"><span class="sing
-le-line address-line1"></span> <span class="single-line address-line2"></span> <!-- ngIf: transaction.merchant.phoneNumber --><a data-ng-if="transacti
-on.merchant.phoneNumber" tabindex="-1" data-ng-href="tel:(402) 935-2050" class="single-line phone-number" href="tel:(402) 935-2050">(402) 935-2050 </a
-><!-- end ngIf: transaction.merchant.phoneNumber --><!-- ngIf: transaction.merchant.websiteURL.href --><a data-ng-if="transaction.merchant.websiteURL.
-href" tabindex="-1" class="single-line-link merchant-website" target="_blank" data-ng-href="http://paypal.com/" data-ng-click="accordionVM.accordionPa
-rent.logClickEvent('merchant')" rel="noopener noreferrer" stop-event-prop="" title="to , Opens a new Window" href="http://paypal.com/">Merchant websit
-e</a><!-- end ngIf: transaction.merchant.websiteURL.href --></div><!-- end ngIf: transaction.merchant.address || transaction.merchant.phoneNumber --><
-table class="ets-table"><tbody><tr class="ets-row" data-ng-show="::transaction.transactionType.description" aria-hidden="false"><td class="key">Transa
-ction Type:</td><td class="value transaction-type">Debit card purchase</td></tr><tr class="ets-row ng-hide" data-ng-show="transaction.purchasedBy" ari
-a-hidden="true" style=""><td class="key">Purchased By:</td><!-- ngIf: transaction.purchasedBy !== 'JOINT_ACCOUNT_HOLDER' --><td class="value last-four
-" data-ng-if="transaction.purchasedBy !== 'JOINT_ACCOUNT_HOLDER'"></td><!-- end ngIf: transaction.purchasedBy !== 'JOINT_ACCOUNT_HOLDER' --><!-- ngIf:
- transaction.purchasedBy === 'JOINT_ACCOUNT_HOLDER' --></tr><tr class="ets-row"><td class="key">Purchased:</td><td class="value purchased-date">
- Mon, Jun 24, 2019 8:41 pm</td></tr><tr class="ets-row" data-ng-show="::transaction.transactionStatus !== 'pending'" aria-hidden="false">
- <td class="key">Posted:</td><td class="value posted-date">Mon, Jun 24, 2019</td></tr></tbody></table><span class="pending-message ng-hide" 
- data-ng-show="::transaction.transactionStatus === 'pending'" aria-hidden="true" style="">
- This transaction is pending, which means it hasn’t cleared yet and the final amount may change. 
- Pending transactions generally post within 72 hours, at which point you can dispute it if it doesn’t seem right to you. 
- </span><span class="grey-out statement-description"><strong>Appears on statement as: </strong><i class="italic">
- Debit Card Purchase - PAYPAL UNDERARMOUR 8887276687 MD</i></span><transaction-memo 
- data-memo-label="accordionVM.accordionParent.i18nPastTransactions['memoLabel']" data-memo="transaction.transactionDescriptionDetail.memoText">
- <!-- ngInclude: getTemplate() --><div ng-include="getTemplate()" class=""><div></div></div></transaction-memo><div class="transaction-options">
- <!-- ngIf: accordionVM.accordionParent.showViewMerchantReceiptLink(transaction) --><div id="transaction-138-dispute" class="single-line-link not-visible" 
- a-ng-click="$event.stopPropagation(); accordionVM.accordionParent.goToDisputesModal('bankDebitCard', transaction, $index); accordionVM.accordionParent.
- logClickEvent('360 ets:report a problem:link')" data-ng-class="{'not-visible' : accordionVM.accordionParent.hide360DebitReportProblemFlag(transaction)}" 
- tabindex="-1" role="button"><i class="icon-flag"></i> Report a Problem</div></div></div><!-- ngIf: ::transaction.merchant.geoLocation.latitude && 
- transaction.merchant.geoLocation.longitude --></accordion-drawer></div></div></div><!-- end ngRepeat: transaction in accordionVM.accordionElements | 
- limitTo :accordionVM.accordionParent.moreTransactionsProperties.maxVisibleTransactions --><div data-ng-repeat="transaction in 
- accordionVM.accordionElements | limitTo :accordionVM.accordionParent.moreTransactionsProperties.maxVisibleTransactions" class="">
- <!-- ngIf: transaction.transactionOverview.transactionYear --><div "
+56: " role="row" class="bank-transaction" data-ng-class="{open : accordionVM.isOpen($index)}" data-ng-click="accordionVM.
+setOpenIndex($index); accordionVM.accordionParent.getTransactionDetails(transaction, accordionVM.isOpen($index))" tabind
+ex="-1"><i class="icon-caret desktop"></i><div role="gridcell" class="transaction-date"><div class="month">Jan</div><div 
+class="day">07</div></div><div class="transaction-logo"><img alt="" class="img-logo" data-ng-src="https://content.capit
+alone.com/Common/images/ETS/bank/cash-deposit.png" src="https://content.capitalone.com/Common/images/ETS/bank/cash-depos
+it.png"></div><div class="transaction-description-container"><div role="gridcell" class="transaction-title"><i class="ic
+on-caret mobile"></i><div><span id="transactionName-110" role="button" aria-expanded="false" tabindex="0">VENMO</span> 
+<span data-ng-class="{'memo-ledger-icon': transaction.transactionDescriptionDetail.memoText}" class="memo-ledger-icon">
+</span></div></div><div role="gridcell" class="transaction-category">Transfer</div></div><div class="transaction-amount
+-details"><div role="gridcell" data-ng-class="accordionVM.accordionParent.getTransactionAmountClass(transaction)" class
+="transaction-amount Credit">$221.04</div><div role="gridcell" class="transaction-balance">$11,551.61</div></div><!-- ng
+Include: accordionVM.accordionParent.getTemplate(transaction) --><div data-ng-include="accordionVM.accordionParent.getTe
+mplate(transaction)" stop-event-prop="" class=""><accordion-drawer id="transaction-drawer-110" class="bank-enhanced-tran
+saction" role="region" aria-live="polite" is-open="accordionVM.isOpen($index)" accordion-open="accordionVM.accordionPare
+nt.logDrawerOpenEvent('ach')" accordion-close="accordionVM.accordionParent.logDrawerCloseEvent('transactions:Drawer:Clo
+se')" aria-hidden="true"><!-- ngIf: accordionVM.accordionParent.isDisputed(transaction) --><div class="cleansed-data ma
+x-width" data-ng-class="{'max-width': !transaction.merchant.address}"><!-- ngIf: transaction.merchant.address || transa
+ction.merchant.phoneNumber --><table class="ets-table"><tbody><tr class="ets-row" data-ng-show="transaction.transaction
+Type.description" aria-hidden="false"><td class="key">Transaction Type:</td><td class="value transaction-type">Electron
+ic transfer</td></tr></tbody></table><span class="grey-out statement-description"><b>Appears on statement as: </b><i cl
+ass="italic">Deposit from VENMO CASHOUT</i></span><transaction-memo data-memo-label="accordionVM.accordionParent.i18nPa
+stTransactions['memoLabel']" data-memo="transaction.transactionDescriptionDetail.memoText"><!-- ngInclude: getTemplate()
+ --><div ng-include="getTemplate()" class=""><div class="memo-container"><div class="memo-label">Memo</div><div class="m
+ emo-content">CASHOUT</div></div></div></transaction-memo><div id="transaction-110-dispute" class="single-line-link not
+ -visible" data-ng-click="$event.stopPropagation(); accordionVM.accordionParent.goToDisputesModal('ach', transaction, 
+ $index)" data-ng-class="{'not-visible' : accordionVM.accordionParent.hide360ReportProblemFlag(transaction)}" tabindex=
+ "-1" role="button"><i class="icon-flag"></i> Report a Problem</div></div></accordion-drawer></div></div></div><!-- end
+  ngRepeat: transaction in accordionVM.accordionElements | limitTo :accordionVM.accordionParent.moreTransactionsPropert
+  ies.maxVisibleTransactions --><div data-ng-repeat="transaction in accordionVM.accordionElements | limitTo :accordionV
+  M.accordionParent.moreTransactionsProperties.maxVisibleTransactions" class=""><!-- ngIf: transaction.transactionOver
+  view.transactionYear --><div class="posted-transaction-header" ng-if="transaction.transactionOverview.transactionYear"
+   role="row"><h3 class="posted-past-header container">2018 Transactions</h3><div class="posted-transaction-header-col
+   umns"><div id="header-date-2018" class="header-date" role="columnheader" aria-label="">Date</div><div class="header
+   -logo">&nbsp;</div><div class="header-description"><div id="header-description-2018" class="header-title" role="col
+   umnheader" aria-label="">Description</div><div id="header-category-2018" class="header-category" role="columnheader
+   " aria-label="">Category</div></div><div class="header-amount-details"><div id="header-amount-2018" class="header-am
+   ount" role="columnheader" aria-label="">Amount</div><div id="header-balance-2018" class="header-balance" role="colum
+   nheader" aria-label="">Balance</div></div></div></div><!-- end ngIf: transaction.transactionOverview.transactionYear
+    --><div "

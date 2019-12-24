@@ -1,4 +1,4 @@
-import { parseHTMLArrForTransactionsC1, convertArraytoJSON, parseHTMLArrForTransactionsVenmo } from './utils.js';
+import { parseHTMLArrForTransactionsC1, parseHTMLArrForTransactionsVenmo } from './utils.js';
 
 function extractVenmoHTMLContent(innerHTML) {
     const beginTransactions = innerHTML.indexOf('<div id="activity-feed">');
@@ -17,31 +17,23 @@ function extractVenmoHTMLContent(innerHTML) {
 }
 
 function extractC1HTMLContent(innerHTML) {
-    // Add logic to determine the year based on the presence of "Past Transactions"
-    // Then use a date object to get the current year
-
     const beginTransactions = innerHTML.indexOf('<div class="container bank-ledger"');
-    const endRecentTransactions = innerHTML.indexOf('View More Transactions');
 
-    const htmlTransactionString = innerHTML.substring(beginTransactions, endRecentTransactions);
-    let htmlArr = htmlTransactionString.split(/id="transaction-\d+"/);
-    htmlArr.shift();
+    let htmlTransactionString = innerHTML.substring(beginTransactions);
+    htmlTransactionString = htmlTransactionString.replace(/&/g, "")
 
-    const transactionList = parseHTMLArrForTransactionsC1(htmlArr);
-
-    const jsonStringTransactions = convertArraytoJSON(transactionList);
-
-    return jsonStringTransactions;
+    return htmlTransactionString;
 }
 
 function sendPageHTMLContent(innerHTML, tab, filePath, excelSheet, email) {
     const tabTitle = tab.title;
-    let jsonStringTransactions = undefined;
+    let stringOfTransactions = undefined;
 
     if (tabTitle.indexOf('Capital One') >= 0) {
-        jsonStringTransactions = extractC1HTMLContent(innerHTML);
+        stringOfTransactions = '' + extractC1HTMLContent(innerHTML);
+        console.log(stringOfTransactions.length)
     } else if (tabTitle.indexOf('Venmo') >= 0) {
-        jsonStringTransactions = extractVenmoHTMLContent(innerHTML);
+        stringOfTransactions = extractVenmoHTMLContent(innerHTML);
     }
 
     let xmlhttp = new XMLHttpRequest();
@@ -57,7 +49,7 @@ function sendPageHTMLContent(innerHTML, tab, filePath, excelSheet, email) {
 
     xmlhttp.open("POST", "http://127.0.0.1:5000/", true);
     xmlhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    xmlhttp.send('data=' + jsonStringTransactions + '&financial_institution=' + tab.title + '&file_path=' + filePath + '&excel_sheet=' + excelSheet + '&email=' + email);
+    xmlhttp.send('data=' + stringOfTransactions + '&financial_institution=' + tabTitle + '&file_path=' + filePath + '&excel_sheet=' + excelSheet + '&email=' + email);
 
     console.log(xmlhttp);
 }

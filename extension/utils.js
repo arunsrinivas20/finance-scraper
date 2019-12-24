@@ -1,4 +1,3 @@
-
 const monthToNum = {
     'Jan': 1,
     'Feb': 2,
@@ -24,17 +23,6 @@ const monthToNum = {
     'October': 10,
     'November': 11,
     'December': 12
-}
-
-export function convertArraytoJSON(transactionArr) {
-    let res = {};
-    const len = transactionArr.length;
-
-    for (let i = 0; i < len; i++) {
-        res['' + i] = transactionArr[i];
-    }
-
-    return JSON.stringify(res);
 }
 
 export function parseHTMLArrForTransactionsC1(htmlArr) {
