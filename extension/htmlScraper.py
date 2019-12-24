@@ -35,6 +35,20 @@ def parse_from_C1(html_str):
 
     return transactions
 
-def parse_from_Venmo(html):  
-    print('Venmo')
-    print(html)
+def parse_from_Venmo(html_str):  
+    soup = BeautifulSoup(html_str, features='lxml')
+    html_transactions = soup.find_all("div", {'class': 'feed-story-payment'})
+    print(html_transactions[15])
+    
+    people = tuple([ele.text for ele in html_transactions[15].find_all("strong")])
+
+    amount_str = html_transactions[15].find('div', {'class': 'feed-description__amount'}).find('span').text
+    amount = float(amount_str.replace('$', '').replace(',', ''))
+    
+    description = html_transactions[15].find('div', {'class': 'feed-description__notes__content'}).text
+
+    date_str = html_transactions[15].find('span', {'class': 'feed-description__notes__meta'}).find('span').text
+    date_lst = date_str.replace(',', '').split()
+    date = f'{MONTH_TO_NUM[date_lst[0]]}/{date_lst[1]}/{int(date_lst[2]) % 100}'
+
+    print(people, amount, description, date)

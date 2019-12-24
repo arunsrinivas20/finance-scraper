@@ -1,23 +1,5 @@
-import { parseHTMLArrForTransactionsC1, parseHTMLArrForTransactionsVenmo } from './utils.js';
-
-function extractVenmoHTMLContent(innerHTML) {
+function extractHTMLContent(innerHTML) {
     const beginTransactions = innerHTML.indexOf('<div id="activity-feed">');
-    const endRecentTransactions = innerHTML.indexOf('<div class="feed-more">');
-
-    const htmlTransactionString = innerHTML.substring(beginTransactions, endRecentTransactions);
-
-    let htmlArr = htmlTransactionString.split('<div class="feed-story"');
-    htmlArr.shift();
-
-    const transactionList = parseHTMLArrForTransactionsVenmo(htmlArr);
-
-    const jsonStringTransactions = convertArraytoJSON(transactionList);
-
-    return jsonStringTransactions;
-}
-
-function extractC1HTMLContent(innerHTML) {
-    const beginTransactions = innerHTML.indexOf('<div class="container bank-ledger"');
 
     let htmlTransactionString = innerHTML.substring(beginTransactions);
     htmlTransactionString = htmlTransactionString.replace(/&/g, "")
@@ -30,10 +12,11 @@ function sendPageHTMLContent(innerHTML, tab, filePath, excelSheet, email) {
     let stringOfTransactions = undefined;
 
     if (tabTitle.indexOf('Capital One') >= 0) {
-        stringOfTransactions = '' + extractC1HTMLContent(innerHTML);
-        console.log(stringOfTransactions.length)
+        stringOfTransactions = '' + extractHTMLContent(innerHTML, '<div class="container bank-ledger"');
     } else if (tabTitle.indexOf('Venmo') >= 0) {
-        stringOfTransactions = extractVenmoHTMLContent(innerHTML);
+        stringOfTransactions = '' + extractHTMLContent(innerHTML, '<div id="activity-feed">');
+        console.log(stringOfTransactions)
+        console.log(stringOfTransactions.length)
     }
 
     let xmlhttp = new XMLHttpRequest();

@@ -41,7 +41,7 @@ def append_to_existing_Excel_sheet(dataframe, start_row, table_column_location):
     dataframe.to_excel(excel_writer, sheet_name=SHEET_NAME, float_format='%.2f', header=False, index=False, startrow=start_row, startcol=table_column_location)
 
     # Uncomment the line below whenever you want to write to desired Excel file
-    excel_writer.save()
+    # excel_writer.save()
 
 def create_transactions_dataframe(finances_sheet, transactions):
     table_column_location = 0
@@ -88,7 +88,6 @@ def create_transactions_dataframe(finances_sheet, transactions):
                 new_transaction = pd.DataFrame([[final_date_obj, balance, amount, reason]], columns=columns_to_modify)   
             elif (FINANCIAL_INSTITUTION == 'Venmo'):
                 new_transaction = pd.DataFrame([[final_date_obj, balance, amount, reason]], columns=columns_to_modify)
-
 
             new_transactions = new_transactions.append(new_transaction, ignore_index=True)
 
@@ -155,8 +154,8 @@ def index():
     FILE_PATH = request.form['file_path']
     SHEET_NAME = request.form['excel_sheet']
     transactions = None
-
     fin_inst = request.form['financial_institution']
+    
     if ('Capital One' in fin_inst):
         FINANCIAL_INSTITUTION = 'C1'
         TABLE_NAME = 'Bank'
@@ -165,6 +164,7 @@ def index():
         FINANCIAL_INSTITUTION = 'Venmo'
         TABLE_NAME = 'Venmo'
         parse_from_Venmo(html_data)
+        return 'TBD'
     else:
         return 'Something went wrong. We were not able to determine your financial institution.'
 
