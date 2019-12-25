@@ -3,6 +3,9 @@ import sqlite3
 conn = None
 cursor = None
 
+def close_db_conn():
+    conn.close()
+
 def commit_db():
     conn.commit()
 
@@ -11,6 +14,8 @@ def insert_into_db(item, source):
         cursor.execute(f'''INSERT INTO CAPITAL_ONE (transaction_id) VALUES (?);''', (item,))
     elif (source == 'Venmo'):
         cursor.execute(f'''INSERT INTO VENMO (transaction_html) VALUES(?);''', (item,))
+    elif (source == 'Categories'):
+        print(source)
 
 def select_from_db(key, source):
     query_result = None
@@ -21,6 +26,8 @@ def select_from_db(key, source):
     elif (source == 'Venmo'):
         cursor.execute(f'''SELECT * FROM VENMO WHERE transaction_html = (?);''', (key,))
         query_result = cursor.fetchone()
+    elif (source == 'Categories'):
+        print(source)
 
     return query_result
 

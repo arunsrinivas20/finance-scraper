@@ -12,7 +12,7 @@ import shutil
 import os
 from htmlScraper import parse_from_C1, parse_from_Venmo
 from utils import find_start_row, is_number
-from operationsDB import init_db, select_from_db, insert_into_db, commit_db
+from operationsDB import init_db, select_from_db, insert_into_db, commit_db, close_db_conn
 
 # import smtplib, ssl, email
 # from email import encoders
@@ -189,6 +189,8 @@ def index():
     
     if (not is_number(number_of_new_transactions)):
         return number_of_new_transactions
+
+    close_db_conn()
 
     return construct_alert_message(number_of_new_transactions)
 
