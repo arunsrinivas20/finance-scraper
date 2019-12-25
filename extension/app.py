@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import request
-import json
 import re
 import pandas as pd
 import datetime
@@ -8,17 +7,18 @@ from openpyxl import load_workbook
 import numpy as np
 from decimal import Decimal
 from xlrd import XLRDError
-import smtplib, ssl, email
-from email import encoders
-from email.mime.base import MIMEBase
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import sqlite3
 import sys
 import shutil
 import os
 from htmlScraper import parse_from_C1, parse_from_Venmo
-from utils import find_start_row, is_number, duplicate_not_exists
+from utils import find_start_row, is_number
+from operationsDB import init_db, select_from_db, insert_into_db, commit_db
+
+# import smtplib, ssl, email
+# from email import encoders
+# from email.mime.base import MIMEBase
+# from email.mime.multipart import MIMEMultipart
+# from email.mime.text import MIMEText
 
 app = Flask(__name__)
 app.debug = True
@@ -38,8 +38,10 @@ def append_to_existing_Excel_sheet(dataframe, start_row, table_column_location):
 
     dataframe.to_excel(excel_writer, sheet_name=SHEET_NAME, float_format='%.2f', header=False, index=False, startrow=start_row, startcol=table_column_location)
 
-    # Uncomment the line below whenever you want to write to desired Excel file
-    # excel_writer.save()
+    # Uncomment these 2 lines below whenever you want to write to desired Excel file and commit insertions
+    excel_writer.save()
+    commit_db()
+
 
 def create_transactions_dataframe(finances_sheet, transactions):
     table_column_location = 0
@@ -54,12 +56,10 @@ def create_transactions_dataframe(finances_sheet, transactions):
 
     start_row = find_start_row(finances_sheet, table_column_location + 1)
 
-    print(finances_sheet)
-
     last_transaction_date = (finances_sheet.loc[start_row - 1, table_column_location]).date()
     current_balance = finances_sheet.loc[start_row - 1, table_column_location + 1]
 
-    print(last_transaction_date)
+    print(f'LAST RECORDED DATE: {last_transaction_date}')
 
     # This will change depending on the structure of your sheet
     if (FINANCIAL_INSTITUTION == 'C1'):
@@ -75,23 +75,29 @@ def create_transactions_dataframe(finances_sheet, transactions):
         final_date_obj = pd.to_datetime(trans_i['date']).date()
 
         # Need to figure out duplicates
-        if (final_date_obj > last_transaction_date):
+        if (final_date_obj >= last_transaction_date):
             new_transaction = None
+            values_to_insert = None
             reason = trans_i['description']
             amount = trans_i['amount']
+            can_insert = True
 
             if (FINANCIAL_INSTITUTION == 'C1'):
                 balance = trans_i['balance']
-
-                new_transaction = pd.DataFrame([[final_date_obj, balance, amount, reason]], columns=columns_to_modify)   
+                values_to_insert = [final_date_obj, balance, amount, reason]
             elif (FINANCIAL_INSTITUTION == 'Venmo'):
-                current_balance += amount
-                print(current_balance)
-                category = trans_i['category']
+                if (not select_from_db(trans_i['html'], 'Venmo')):
+                    current_balance += amount
+                    category = trans_i['category']
+                    values_to_insert = [final_date_obj, current_balance, amount, reason, category]
 
-                new_transaction = pd.DataFrame([[final_date_obj, current_balance, amount, reason, category]], columns=columns_to_modify)
-
-            new_transactions = new_transactions.append(new_transaction, ignore_index=True)
+                    insert_into_db(trans_i['html'], 'Venmo')
+                else:
+                    can_insert = False
+                
+            if (can_insert):
+                new_transaction = pd.DataFrame([values_to_insert], columns=columns_to_modify)
+                new_transactions = new_transactions.append(new_transaction, ignore_index=True)
 
     new_transactions[table_column_location + 1] = new_transactions[table_column_location + 1].astype(float)
     new_transactions[table_column_location + 2] = new_transactions[table_column_location + 2].astype(float)
@@ -157,6 +163,8 @@ def index():
     SHEET_NAME = request.form['excel_sheet']
     transactions = None
     fin_inst = request.form['financial_institution']
+
+    init_db()
 
     if ('Capital One' in fin_inst):
         FINANCIAL_INSTITUTION = 'C1'

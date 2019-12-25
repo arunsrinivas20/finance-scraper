@@ -39,26 +39,6 @@ def is_number(number):
     except ValueError:
         return False
 
-# Might be more difficult since I change the descriptions later
-# We will handle potenital duplicates later using sqlite3
-def duplicate_not_exists(dataframe, transaction, date, row, col):
-    while (dataframe.loc[row, col].date() == date):
-        amount = transaction['amount']
-        balance = transaction['balance']
-
-        entry_bal = dataframe.loc[row, col + 1]
-        entry_amt = dataframe.loc[row, col + 2]
-
-        print(amount == entry_amt)
-        print(balance == entry_bal)
-
-        if (amount == entry_amt and balance == entry_bal):
-            return False
-
-        row -= 1
-
-    return True
-
 def find_start_row(dataframe, table_column_location):
     row = 0
     no_empty_cell = True

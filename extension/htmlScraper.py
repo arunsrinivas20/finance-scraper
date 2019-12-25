@@ -13,7 +13,6 @@ def parse_from_C1(html_str):
     soup = BeautifulSoup(html_str, features='lxml')
     html_transactions = soup.find_all("div", id=lambda x: x and valid_transaction_or_header(x))
 
-    i = 0
     for html in html_transactions:
         if 'header-date' in html.get_attribute_list('class'):
             curr_year = int(html.get_attribute_list('id')[0].split('-')[-1])
@@ -32,8 +31,6 @@ def parse_from_C1(html_str):
                 'amount': -1 * magnitude if is_pos else magnitude,
                 'balance': balance
             })
-
-        i += 1
 
     return transactions
 
@@ -83,7 +80,8 @@ def parse_from_Venmo(html_str):
             'date': date,
             'description': reason,
             'amount': amount,
-            'category': category
+            'category': category,
+            'html': str(html)
         })
 
     return transactions
