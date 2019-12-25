@@ -3,9 +3,6 @@ import sqlite3
 conn = None
 cursor = None
 
-def close_conn_db():
-    conn.close()
-
 def commit_db():
     conn.commit()
 

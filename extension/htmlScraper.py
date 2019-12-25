@@ -20,16 +20,21 @@ def parse_from_C1(html_str):
             month = MONTH_TO_NUM[html.find("div", {"class": "month"}).text]
             day = html.find("div", {"class": "day"}).text
             description = html.find("span", id=lambda x: x and x.startswith('transactionName')).text
+
             amount = html.find("div", {"class": lambda x: x and x.startswith('transaction-amount ')})
             magnitude = float(amount.text[1:].replace(',', ''))
             is_pos = amount.get_attribute_list('class')[1] == 'Credit'
+
             balance = float(html.find("div", {"class": "transaction-balance"}).text[1:].replace(',', ''))
+
+            t_id = html.get_attribute_list('id')[0].split('-')[-1]
 
             transactions.append({
                 'date': f'{month}/{day}/{curr_year % 100}',
                 'description': description,
                 'amount': -1 * magnitude if is_pos else magnitude,
-                'balance': balance
+                'balance': balance,
+                'transaction_id': t_id
             })
 
     return transactions

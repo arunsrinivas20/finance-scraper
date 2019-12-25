@@ -39,8 +39,8 @@ def append_to_existing_Excel_sheet(dataframe, start_row, table_column_location):
     dataframe.to_excel(excel_writer, sheet_name=SHEET_NAME, float_format='%.2f', header=False, index=False, startrow=start_row, startcol=table_column_location)
 
     # Uncomment these 2 lines below whenever you want to write to desired Excel file and commit insertions
-    excel_writer.save()
-    commit_db()
+    # excel_writer.save()
+    # commit_db()
 
 
 def create_transactions_dataframe(finances_sheet, transactions):
@@ -83,8 +83,13 @@ def create_transactions_dataframe(finances_sheet, transactions):
             can_insert = True
 
             if (FINANCIAL_INSTITUTION == 'C1'):
-                balance = trans_i['balance']
-                values_to_insert = [final_date_obj, balance, amount, reason]
+                if (not select_from_db(trans_i['transaction_id'], 'C1')):
+                    balance = trans_i['balance']
+                    values_to_insert = [final_date_obj, balance, amount, reason]
+
+                    insert_into_db(trans_i['transaction_id'], 'C1')
+                else:
+                    can_insert = False
             elif (FINANCIAL_INSTITUTION == 'Venmo'):
                 if (not select_from_db(trans_i['html'], 'Venmo')):
                     current_balance += amount
