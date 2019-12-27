@@ -195,8 +195,6 @@ def index():
     return construct_alert_message(number_of_new_transactions)
 
 if __name__ == "__main__":
-    # if (len(sys.argv) != 3):
-    #     raise Exception("Invalid command. Arguments are incorrect.")
     if os.path.exists('./__pycache__'):
         shutil.rmtree('./__pycache__')
 
