@@ -91,15 +91,20 @@ def create_transactions_dataframe(finances_sheet, transactions):
                 else:
                     can_insert = False
             elif (FINANCIAL_INSTITUTION == 'Venmo'):
-                if (not select_from_db(trans_i['html'], 'Venmo')):
+                # Venmo does not allow duplicate transactions in the same minute, so
+                # we can define a "unique" transaction to be unique based on its
+                # date, time, person1, person2, amount, and original (in venmo) description. 
+                item = f'{trans_i["date"]} {trans_i["time"]} {trans_i["person1"]} {trans_i["person2"]} {str(amount)} {trans_i["original_reason"]}'
+
+                if (not select_from_db(item, 'Venmo')):
                     current_balance += amount
                     category = trans_i['category']
                     values_to_insert = [final_date_obj, current_balance, amount, reason, category]
 
-                    insert_into_db(trans_i['html'], 'Venmo')
+                    insert_into_db(item, 'Venmo')
                 else:
                     can_insert = False
-                
+
             if (can_insert):
                 new_transaction = pd.DataFrame([values_to_insert], columns=columns_to_modify)
                 new_transactions = new_transactions.append(new_transaction, ignore_index=True)

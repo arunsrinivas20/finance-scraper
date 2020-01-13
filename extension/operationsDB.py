@@ -13,7 +13,7 @@ def insert_into_db(item, source):
     if (source == 'C1'):
         cursor.execute(f'''INSERT INTO CAPITAL_ONE (transaction_id) VALUES (?);''', (item,))
     elif (source == 'Venmo'):
-        cursor.execute(f'''INSERT INTO VENMO (transaction_html) VALUES(?);''', (item,))
+        cursor.execute(f'''INSERT INTO VENMO (details) VALUES(?);''', (item,))
     elif (source == 'Categories'):
         print(source)
 
@@ -24,7 +24,7 @@ def select_from_db(key, source):
         cursor.execute(f'''SELECT * FROM CAPITAL_ONE WHERE transaction_id = (?);''', (key,))
         query_result = cursor.fetchone()
     elif (source == 'Venmo'):
-        cursor.execute(f'''SELECT * FROM VENMO WHERE transaction_html = (?);''', (key,))
+        cursor.execute(f'''SELECT * FROM VENMO WHERE details = (?);''', (key,))
         query_result = cursor.fetchone()
     elif (source == 'Categories'):
         print(source)
@@ -42,7 +42,7 @@ def init_db():
                     );''')
             
     cursor.execute('''CREATE TABLE IF NOT EXISTS VENMO (
-                        transaction_html TEXT PRIMARY KEY
+                        details TEXT PRIMARY KEY
                     )''')
             
     cursor.execute('''CREATE TABLE IF NOT EXISTS CATEGORIES (

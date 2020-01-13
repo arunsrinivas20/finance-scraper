@@ -78,15 +78,19 @@ def parse_from_Venmo(html_str):
         date_str = html.find('span', {'class': 'feed-description__notes__meta'}).find('span').text.strip()
         date_lst = date_str.replace(',', '').split()
         date = f'{MONTH_TO_NUM[date_lst[0]]}/{date_lst[1]}/{int(date_lst[2]) % 100}'
+        time = f'{date_lst[3]} {date_lst[4]}'
 
         category = determine_venmo_category(description)
 
         transactions.append({
             'date': date,
+            'time': time,
+            'original_reason': description,
             'description': reason,
             'amount': amount,
-            'category': category,
-            'html': str(html)
+            'person1': person1,
+            'person2': person2,
+            'category': category
         })
 
     return transactions
