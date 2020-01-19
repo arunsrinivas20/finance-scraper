@@ -8,11 +8,14 @@ Although, the transcribing to Excel is unique to organization of my spreadsheet,
 
 ## Part I. Setting up for scraping
 
-1. Make sure that you have an existing spreadsheet for the extension to write to. Within the file, mark locations for Venmo and/or Capital One. Here is how the tables within my sheet are organized:<br>
+1. Make sure that you have an existing spreadsheet for the extension to write to. Within the file, mark locations for Venmo and/or Capital One. Here is how the tables within my sheet are organized:
+
 Capital One Table Screenshot
 <img src="images/Capital_One_ScreenShot.png">
+
 Venmo Table Screenshot
 <img src="images/Venmo_ScreenShot.png">
+
 In both of these screenshots, the first column represents the date of the transaction, the second (title) column represents the amount in the account after applying the transaction, the third column represents the transaction amount, and the fourth column represents the reason for the transactions. In the Venmo screenshot, the fifth column represents the category for the transaction, but the auto-categorization process is still being implemented. 
 
 2. Load the unpacked Chrome extension (just the extension folder) into Chrome by navigating to the URL [chrome://extensions/](chrome://extensions/). Once it is loaded, navigate to either [Capital One](https://www.capitalone.com/) or [Venmo](https://venmo.com/). On Venmo's site, login and then click the **Mine** tab to view your personal transactions. On Capital One's site, login and click your personal checking account tab to view your transactions for that account.
