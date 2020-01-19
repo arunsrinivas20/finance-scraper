@@ -1,8 +1,8 @@
 # Finance Scraper Chrome Extension
 
-The chrome extension is designed to scrape information from **Capital One** (checking account) and **Venmo**, and transcribe that information into an existing Microsoft Excel spreadsheet. It utilizes **Python** and **JavaScript** to carry out this function. 
+The chrome extension is designed to scrape information from [Capital One](https://www.capitalone.com/) (checking account) and [Venmo](https://venmo.com/), and transcribe that information into an existing Microsoft Excel spreadsheet. It utilizes **Python** and **JavaScript** to carry out this function. 
 
-Although, the transcribing to Excel is unique to organization of my spreadsheet, there are a few ways (look in the commented portions of **app.py**) to customize it based on your organization. I am currently working on ways to make the entire process more general. 
+Although, the transcribing to Excel is unique to organization of my spreadsheet, there are a few ways (look in the commented portions of [app.py](https://github.com/arunsrinivas20/finance-scraper/blob/master/extension/app.py)) to customize it based on your organization. I am currently working on ways to make the entire process more general. 
 
 # 
 
@@ -12,11 +12,11 @@ Although, the transcribing to Excel is unique to organization of my spreadsheet,
 <br>
 <br>
 Capital One Table Screenshot
-![Alt text](/images/Capital_One_ScreenShot.png?raw=true)
+![Alt text](https://raw.githubusercontent.com/i-arunsrinivas20/finance-scraper/master/images/Capital_One_ScreenShot.png.jpg)
 <br>
 <br>
 Venmo Table Screenshot
-![Alt text](images/Venmo_ScreenShot.png?raw=true)
+![Alt text](https://raw.githubusercontent.com/i-arunsrinivas20/finance-scraper/master/images/Venmo_ScreenShot.png.jpg)
 <br>
 <br>
 In both of these screenshots, the first column represents the date of the transaction, the second (title) column represents the amount in the account after applying the transaction, the third column represents the transaction amount, and the fourth column represents the reason for the transactions. In the Venmo screenshot, the fifth column represents the category for the transaction, but the auto-categorization process is still being implemented. 
@@ -32,11 +32,3 @@ In both of these screenshots, the first column represents the date of the transa
 2. After clicking submit, the local database will be initialized, if nothing exists, and the transactions will be written and committed to the Excel spreadsheet and local database, respectively. 
 
 3. Once the transcribing is complete, Chrome will display a popup notification, alerting that the process has completed and Y number of transactions have been recorded. The appended dataframe can also be seen in the terminal output. 
-
-## What I am working on right now
-
-- I am working on making the application more general, as stated above. The organization of the tables is a little specific and restrictive, so my goal is to make it a little more flexible. 
-
-- I am also researching ways to automatically categorize Venmo transactions based on the description of the transaction. This means assigning Clothing Grocery, Recreation, Travel, etc. to each transaction. 
-
-- I am also working on the UI for the popup. 
