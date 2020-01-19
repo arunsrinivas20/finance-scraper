@@ -12,11 +12,11 @@ Although, the transcribing to Excel is unique to organization of my spreadsheet,
 <br>
 <br>
 Capital One Table Screenshot
-![](images/Capital_One_ScreenShot.png)
+<img src="images/Capital_One_ScreenShot.png">
 <br>
 <br>
 Venmo Table Screenshot
-![](images/Venmo_ScreenShot.png)
+<img src="images/Venmo_ScreenShot.png">
 <br>
 <br>
 In both of these screenshots, the first column represents the date of the transaction, the second (title) column represents the amount in the account after applying the transaction, the third column represents the transaction amount, and the fourth column represents the reason for the transactions. In the Venmo screenshot, the fifth column represents the category for the transaction, but the auto-categorization process is still being implemented. 
