@@ -14,12 +14,6 @@ from htmlScraper import parse_from_C1, parse_from_Venmo
 from utils import find_start_row, is_number
 from operationsDB import init_db, select_from_db, insert_into_db, commit_db, close_db_conn
 
-# import smtplib, ssl, email
-# from email import encoders
-# from email.mime.base import MIMEBase
-# from email.mime.multipart import MIMEMultipart
-# from email.mime.text import MIMEText
-
 app = Flask(__name__)
 app.debug = True
 
@@ -61,7 +55,7 @@ def create_transactions_dataframe(finances_sheet, transactions):
 
     print(f'LAST RECORDED DATE: {last_transaction_date}')
 
-    # This will change depending on the structure of your sheet
+    # This will CHANGE depending on YOUR Excel Spreadsheet. 
     if (FINANCIAL_INSTITUTION == 'C1'):
         columns_to_modify = [table_column_location, table_column_location + 1, table_column_location + 2, table_column_location + 3]   
     elif (FINANCIAL_INSTITUTION == 'Venmo'):
@@ -74,7 +68,6 @@ def create_transactions_dataframe(finances_sheet, transactions):
 
         final_date_obj = pd.to_datetime(trans_i['date']).date()
 
-        # Need to figure out duplicates
         if (final_date_obj >= last_transaction_date):
             new_transaction = None
             values_to_insert = None
@@ -178,10 +171,12 @@ def index():
 
     if ('Capital One' in fin_inst):
         FINANCIAL_INSTITUTION = 'C1'
+        # This will CHANGE depending on YOUR Excel Spreadsheet. 
         TABLE_NAME = 'Bank'
         transactions = parse_from_C1(html_data)
     elif ('Venmo' in fin_inst):
         FINANCIAL_INSTITUTION = 'Venmo'
+        # This will CHANGE depending on YOUR Excel Spreadsheet. 
         TABLE_NAME = 'Venmo'
         transactions = parse_from_Venmo(html_data)
     else:
