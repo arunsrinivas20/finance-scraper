@@ -12,7 +12,7 @@ Although, the transcribing to Excel is unique to organization of my spreadsheet,
 <br>
 <br>
 Capital One Table Screenshot
-![Alt text](arunsrinivas20/finance-scraper/blob/master/images/Capital_One_ScreenShot.png?raw=true)
+![Alt text](./images/Capital_One_ScreenShot.png?raw=true)
 <br>
 <br>
 Venmo Table Screenshot
