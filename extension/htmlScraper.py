@@ -32,7 +32,7 @@ def parse_from_C1(html_str):
             transactions.append({
                 'date': f'{month}/{day}/{curr_year % 100}',
                 'description': description,
-                'amount': -1 * magnitude if is_pos else magnitude,
+                'amount': magnitude if is_pos else -1 * magnitude,
                 'balance': balance,
                 'transaction_id': t_id
             })
